@@ -3,6 +3,7 @@ package com.webapplogin.webapplogin.SecurityFilterChain;
 
 //import com.webapplogin.webapplogin.JWTfilter.Jwtfilter;
 import com.webapplogin.webapplogin.JWTfilter.Jwtfilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,10 +19,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfiguration {
 
+
     private final Jwtfilter jwtFilter;
 
-    public SecurityConfiguration(Jwtfilter jwtfilter){
-        this.jwtFilter = jwtfilter;}
+   public SecurityConfiguration(Jwtfilter jwtfilter){
+       this.jwtFilter = jwtfilter;}
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -35,6 +37,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/user/**").permitAll()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/auth/login/register").hasRole("ADMIN") //metto hasauthority e non hasrole perchè has role cerca ROLE_ADMIN e non admin mentre hasauthority cerca l'esatta parola che scriviamo cioè ADMIN.
+                        .requestMatchers("/auth/login/Update").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                         .addFilterBefore(jwtFilter,
@@ -44,9 +47,7 @@ public class SecurityConfiguration {
         );
 
 
-
-
-        return http.build();
+       return http.build();
 
 
     }

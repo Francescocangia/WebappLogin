@@ -2,10 +2,12 @@ package com.webapplogin.webapplogin.Controller;
 
 
 import com.webapplogin.webapplogin.DTO.DTOlogin;
+import com.webapplogin.webapplogin.DTO.UpdateRequest;
 import com.webapplogin.webapplogin.Entity.User;
 import com.webapplogin.webapplogin.Repository.Repository;
 import com.webapplogin.webapplogin.Service.CustomUserDetailsService;
 import com.webapplogin.webapplogin.Service.JWTService;
+import com.webapplogin.webapplogin.Service.Service;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,8 @@ public class AUTHController {
     public Repository repository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    public Service service;
 
 
 
@@ -107,6 +111,12 @@ public class AUTHController {
 
         return "USER CREATED";
     }
+    @PostMapping("login/Update")
+    public ResponseEntity<String> Update( @RequestBody UpdateRequest request){
 
+    service.update( request.getValue(), request.getUpdatedUser());
+
+        return ResponseEntity.ok("update accomplished");
+    }
 
     }

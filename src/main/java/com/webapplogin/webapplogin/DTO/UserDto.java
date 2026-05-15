@@ -1,18 +1,15 @@
 package com.webapplogin.webapplogin.DTO;
 
 
-import com.webapplogin.webapplogin.Entity.User;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
-public class UserDto {
+/*@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserDTO {
+    String email;
+    String Password;
 
-
-    public Integer id;
-    public String username;
-    public String password;
-    public String email;
-    public String role;
-
-
-}
+}*/
