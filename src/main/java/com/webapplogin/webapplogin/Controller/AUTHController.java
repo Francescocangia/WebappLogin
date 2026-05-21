@@ -37,8 +37,10 @@ public class AUTHController {
     @Autowired
     public Service service;
 
-
-
+// cross origini mettiamo origins = 5137 perchè con docker avevo imposto quella porta...senza docker bisogna mettere 5173 che è la porta di vite.
+    //credo nno sono sicuro
+//nota : con docker usare solo quest'annotazione non risolve il problema del cors...ci vuole una configirzione nel backend (una classe annotata con configurazione etc.)classe che in questo programma non ho.
+    @CrossOrigin(origins = "http://localhost:5137")
     @PostMapping("/login")
     public ResponseEntity<Map<String,String>> autentication (@RequestBody DTOlogin login, HttpServletRequest request)  {
         //NOTA FONDAMENTALE : TRY CATCh FONDAMENTALE PER GESTIRE L'ECCEIZONE. e capire l'errore.
@@ -64,15 +66,18 @@ public class AUTHController {
                     SecurityContextHolder.getContext()
             );*/
             User user = repository.findByUsernameOrEmail(login.getLogin(),login.getLogin());
-            if (user==null) System.out.println("utente non trovato");
 
+            if (user == null) {
+                return ResponseEntity.status(401)
+                        .body(Map.of("error", "user not found"));
+            }
             System.out.println("AUTH OK: " + auth.isAuthenticated());
             String token = JWTService.generateToken(
                     auth.getName(),
                     auth.getAuthorities().toString()
             );
 
-            return ResponseEntity.ok(Map.of("token", token));
+            return ResponseEntity.ok(Map.of("login effettuato: ecco il token", token));
         }
 
 
@@ -90,7 +95,9 @@ public class AUTHController {
             System.out.println("MATCH: " + passwordEncoder.matches(login.getPassword(), user.getPassword()));
 
             */
-             return (ResponseEntity<Map<String, String>>) ResponseEntity.status(401);}
+             return (ResponseEntity<Map<String, String>>) ResponseEntity.status(401).body(Map.of("messaggio","password errata"))
+        ;}
+
 
     }
 

@@ -35,7 +35,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/db/**").permitAll()
                         .requestMatchers("/user/**").permitAll()
-                        .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/auth/login/register").hasRole("ADMIN") //metto hasauthority e non hasrole perchè has role cerca ROLE_ADMIN e non admin mentre hasauthority cerca l'esatta parola che scriviamo cioè ADMIN.
                         .requestMatchers("/auth/login/Update").hasRole("ADMIN")
                         .anyRequest().authenticated()

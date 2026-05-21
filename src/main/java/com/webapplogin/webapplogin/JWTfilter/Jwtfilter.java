@@ -33,7 +33,12 @@ public class Jwtfilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
+        String path = request.getServletPath();
 
+        if (path.startsWith("/auth")) {
+            filterChain.doFilter(request, response);
+            return;
+        } // da string path a qui il codice serve per impedire al filtro di bloccare la pagina di login quando faccio l'accesso da frontend
 
         String header = request.getHeader("Authorization");
 
@@ -71,7 +76,8 @@ public class Jwtfilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().getAuthentication());
         }
 
-
+        System.out.println("FILTER PATH: " + request.getServletPath());
+        System.out.println("AUTH HEADER: " + request.getHeader("Authorization"));
 
 
         filterChain.doFilter(request, response);
