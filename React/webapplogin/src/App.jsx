@@ -1,10 +1,10 @@
-import { useState } from 'react'
+/*import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
-
-function App() {
+*/
+/*function App() {
   const [count, setCount] = useState(0)
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -78,4 +78,36 @@ if (response.ok) {
 };
 
 
-export default App
+export default App    
+*/
+
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+
+import Login from "./Login";
+import UtenteLoggato from "./UtenteLoggato";
+import Admin from "./Admin";
+import AdminRoute from "./AdminRoute";
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/utente-loggato" element={<UtenteLoggato />} />
+     
+      <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <Admin />
+            </AdminRoute>
+          }
+        />
+     
+     </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;

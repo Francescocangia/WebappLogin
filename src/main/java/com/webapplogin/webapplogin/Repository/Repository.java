@@ -18,5 +18,4 @@ public interface Repository extends JpaRepository<User, Integer> {
            OR u.username = :value
     """)
     User findByAny(@Param("value") String value);
-//Optional<User> è fondamentale per usare il metodo or nel controller quando chiamo questi 2 metodi!!
 }

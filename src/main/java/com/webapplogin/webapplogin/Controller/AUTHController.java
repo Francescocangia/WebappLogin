@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import java.util.Optional;
 
+
+@CrossOrigin(origins = "http://localhost:5137")
 @RestController
 @RequestMapping("/auth")
 public class AUTHController {
@@ -40,7 +42,7 @@ public class AUTHController {
 // cross origini mettiamo origins = 5137 perchè con docker avevo imposto quella porta...senza docker bisogna mettere 5173 che è la porta di vite.
     //credo nno sono sicuro
 //nota : con docker usare solo quest'annotazione non risolve il problema del cors...ci vuole una configirzione nel backend (una classe annotata con configurazione etc.)classe che in questo programma non ho.
-    @CrossOrigin(origins = "http://localhost:5137")
+
     @PostMapping("/login")
     public ResponseEntity<Map<String,String>> autentication (@RequestBody DTOlogin login, HttpServletRequest request)  {
         //NOTA FONDAMENTALE : TRY CATCh FONDAMENTALE PER GESTIRE L'ECCEIZONE. e capire l'errore.
